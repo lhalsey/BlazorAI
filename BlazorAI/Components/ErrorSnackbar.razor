@@ -1,0 +1,7 @@
+﻿
+<Snackbar Visible="@showError" Color="SnackbarColor.Danger" Interval="20000" Multiline="true">
+  <SnackbarBody>
+    @Error
+  </SnackbarBody>
+  <SnackbarAction Clicked="@(() => Error = "")">x</SnackbarAction>
+</Snackbar>

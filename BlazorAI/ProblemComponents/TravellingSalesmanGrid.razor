@@ -1,0 +1,48 @@
+﻿@inherits TravellingSalesmanGridBase
+
+<Card>
+
+    <svg viewBox="0 0 @Width @Height">
+        <defs>
+
+            <marker id="midPoint" markerWidth="10" markerHeight="10" refX="5" refY="5">
+                <circle cx="5" cy="5" r="4" stroke="#000000" stroke-width="1px" fill="#e7ddf0" opacity="1"/>
+            </marker>
+
+            <marker id="startEnd" markerWidth="20" markerHeight="20" refX="10" refY="10">
+                <circle cx="10" cy="10" r="4" stroke="#000000" stroke-width="1px" fill="#e7ddf0" opacity="1"/>
+                <circle cx="10" cy="10" r="6" stroke="#000000" stroke-width="1px" fill="none" opacity="1"/>
+            </marker>
+
+        </defs>
+
+        <image href="/images/problems/travellingsalesman/bolivia.png" width="100%" opacity="@backgroundOpacity" />
+
+        @if (Path != null)
+        {
+            <polygon points=@Path class="tsp-path-1" style="fill: rgba(150,150,150,@overlayOpacity);" />
+            <polygon points=@Path class="tsp-path-2" style="marker-start: url(#startEnd); marker-mid: url(#midPoint);" />
+        }
+    </svg>
+
+    <div class="opacity-container">
+
+        <p style="margin: 12px 10px 0px 5px;">Distance: @(String.Format("{0:n}", Distance)) miles</p>
+
+        <div style="display: flex; margin: 4px 0 0 0;">
+            <div style="margin:0 20px 4px 0; display:flex;">
+                <span aria-label="Background Opacity 0" @onclick="@(() => backgroundOpacity = 0.0)" class="btn-tiny btn-opacity-bg-1"/>
+                <span aria-label="Background Opacity 1" @onclick="@(() => backgroundOpacity = 0.33)" class="btn-tiny btn-opacity-bg-2" />
+                <span aria-label="Background Opacity 2" @onclick="@(() => backgroundOpacity = 0.65)" class="btn-tiny btn-opacity-bg-3" />
+            </div>
+
+            <div style="margin:0; display:flex;">
+                <span aria-label="Overlay Opacity 0" @onclick="@(() => overlayOpacity = 0.0)" class="btn-tiny btn-opacity-1"/>
+                <span aria-label="Overlay Opacity 1" @onclick="@(() => overlayOpacity = 0.15)" class="btn-tiny btn-opacity-2"/>
+                <span aria-label="Overlay Opacity 2" @onclick="@(() => overlayOpacity = 0.3)" class="btn-tiny btn-opacity-3"/>
+            </div>
+        </div>
+
+    </div>
+
+</Card>

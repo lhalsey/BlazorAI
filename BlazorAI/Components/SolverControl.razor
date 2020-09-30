@@ -1,0 +1,73 @@
+﻿
+<div class="solver-control">
+   
+<Container Fluid="false">
+    <Row>
+        <Column style="padding:0;" ColumnSize="ColumnSize.IsFull.OnMobile.Is6.OnTablet.Is4.OnDesktop.Is2.OnWidescreen" >
+        
+            <div class="solver-button-group">
+                <Button class="btn-round btn-round-small">
+                    <Blazorise.Icon Name="MaterialIcons.SkipPrevious"/>
+                </Button>
+
+                <Button @onclick="@ToggleSolve" class="btn-round" >
+                    <Blazorise.Icon Name="@PlayIcon"/>
+                </Button>
+                
+                <Button class="btn-round btn-round-small">
+                    <Blazorise.Icon Name="MaterialIcons.SkipNext"/>
+                </Button>
+
+                <Button class="btn-round btn-round-smaller d-sm-none d-block"
+                        style="position: absolute; right: 40px; bottom: 3px; z-index: 1000;"
+                        @onclick="@ToggleSettings">
+                    <Blazorise.Icon Name="@SettingsIcon"/>
+                </Button>
+
+                 <Button class="btn-round btn-round-smaller d-sm-none d-block"
+                         style="position: absolute; right: 1px; bottom: 3px; z-index: 1000;"
+                         onclick="document.getElementById('problem-anchor').scrollIntoView({behavior:'smooth'})">
+                    <Blazorise.Icon Name="MaterialIcons.HelpOutline"/>
+                </Button>
+            </div>
+
+        </Column>
+
+        <Column class="@selectorClass" ColumnSize="ColumnSize.Is6.OnMobile.Is6.OnTablet.Is4.OnDesktop.Is2.OnWidescreen" >
+            <SelectControl
+                Label="Generations"
+                Choices="@generationChoices"
+                @bind-Value="@SolverParameters.Generations" />
+        </Column>
+
+        <Column class="@selectorClass" ColumnSize="ColumnSize.Is6.OnMobile.Is6.OnTablet.Is4.OnDesktop.Is2.OnWidescreen" >
+            <SelectControl
+                Label="Population"
+                Choices="@populationChoices"
+                @bind-Value="@SolverParameters.Population" />
+        </Column>
+
+        <Column class="@selectorClass" ColumnSize="ColumnSize.Is6.OnMobile.Is6.OnTablet.Is4.OnDesktop.Is2.OnWidescreen" >
+            <SelectControl
+                Label="Selection"
+                Choices="@selectionChoices"
+                @bind-Value="@SolverParameters.Selection" />
+        </Column>
+
+        <Column class="@selectorClass" ColumnSize="ColumnSize.Is6.OnMobile.Is6.OnTablet.Is4.OnDesktop.Is2.OnWidescreen" >
+            <SelectControl
+                Label="Crossover %"
+                Choices="@crossoverChoices"
+                @bind-Value="@SolverParameters.CrossoverProbability" />
+        </Column>
+
+        <Column class="@selectorClass" ColumnSize="ColumnSize.Is6.OnMobile.Is6.OnTablet.Is4.OnDesktop.Is2.OnWidescreen" >
+            <SelectControl
+                Label="Mutation %"
+                Choices="@mutationChoices"
+                @bind-Value="@SolverParameters.MutationProbability" />
+        </Column>
+    </Row>
+</Container>
+
+</div>

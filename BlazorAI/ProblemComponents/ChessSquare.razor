@@ -1,0 +1,19 @@
+﻿
+<div class="chess-square">
+
+    <svg style="width:100%; height:100%; " viewBox="-50 -50 600 600">
+
+        <rect x="-50" y="-50" width="600" height="600" fill="@FillColour" />
+
+        @if (IsInvalid)
+        {
+            <rect x="-50" y="-50" width="600" height="600" fill="#ad91c4" opacity="0.7"/>
+        }
+
+        @if (HasQueen)
+        {
+			<image width="500" height="500" href="/images/problems/eightqueens/chess-queen.svg"/>
+        }
+    </svg>
+
+</div>

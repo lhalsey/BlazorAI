@@ -1,0 +1,55 @@
+﻿@page "/"
+@page "/travellingsalesman"
+@inherits TravellingSalesmanBase
+
+<SolverLayout
+    @ref="solverLayout"
+    Solver="@this"
+    SelectedNavIndex="1" >
+    
+    <ParameterSection>
+
+        <h2>Parameters</h2>
+
+        <div class="parameters-block">
+            <ParameterSlider Label="Number of Cities" @bind-Value="@numPointsSetting" Min="5" Max="50"/>
+            <ParameterSlider Label="Random Seed" @bind-Value="@randomSeedSetting" Min="0" Max="255"/>
+
+            <Button class="btn-sm" @onclick="@Update">REGENERATE</Button>
+        </div>
+
+    </ParameterSection>
+
+    <ProblemSection>
+
+        <p>The <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem" >Travelling Salesman problem</a> asks the following question:</p>
+        <blockquote>
+            <p>Given a list of cities and the distances between each pair of cities,
+               what is the shortest possible route that visits each city exactly once
+               and returns to the origin city?</p>
+        </blockquote>
+
+        <h2>Approach</h2>
+        <p>We start with a solution which simply visits each point in the order they were
+           generated.</p>
+        <p>We then use an ordered crossover and reverse sequence mutation to
+           generate different routes which visit each point once.</p>
+        <p>The fitness function is the total distance from the origin (marked with a
+           double circle) through all of the points and back to the origin.</p>
+
+        <h2>Performance</h2>
+        <p>This technique works well on this problem and also on other
+        <a href="https://en.wikipedia.org/wiki/NP-hardness">NP-hard</a> problems.</p>
+        <p>See if you can beat 4,000 miles for 35 cities with random seed 100!</p>
+
+    </ProblemSection>
+
+    <OutputSection>
+
+        <TravellingSalesmanGrid Path="@path" Distance="@distance" Width="@GridWidth" Height="@GridHeight" />
+
+    </OutputSection>
+
+</SolverLayout>
+
+

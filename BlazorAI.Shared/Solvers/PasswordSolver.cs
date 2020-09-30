@@ -1,0 +1,125 @@
+﻿using BlazorAI.Shared.Types;
+using GeneticSharp.Domain;
+using GeneticSharp.Domain.Chromosomes;
+using GeneticSharp.Domain.Crossovers;
+using GeneticSharp.Domain.Fitnesses;
+using GeneticSharp.Domain.Mutations;
+using GeneticSharp.Domain.Populations;
+using GeneticSharp.Domain.Randomizations;
+using GeneticSharp.Domain.Selections;
+using System;
+using System.Linq;
+
+namespace BlazorAI.Shared.Solvers
+{
+    public class PasswordSolver : Solver<PasswordSolution>
+    {
+        // Allow characters from Space to Tilde which includes
+        // numbers, upper & lower case letters & punctuation
+        public const int CharLowerBound = 32;
+        public const int CharUpperBound = 127;
+
+        public PasswordSolver(string password)
+        {
+            PasswordLength = password.Length;
+            FitnessProvider = new PasswordFitness(password);
+        }
+
+        int PasswordLength { get; }
+
+        PasswordFitness FitnessProvider { get; }
+
+        protected override GeneticAlgorithm GetGA(SolverParameters parameters)
+        {
+            var adamChromosome = new PasswordChromosome(PasswordLength);
+
+            var population =
+                new Population(parameters.Population, parameters.Population, adamChromosome);
+
+            return new GeneticAlgorithm(
+                population,
+                FitnessProvider,
+                new EliteSelection(),
+                new UniformCrossover(),
+                new StringMutation());
+        }
+
+        protected override PasswordSolution GetSolution(IChromosome chromosome) =>
+           new PasswordSolution
+           {
+               Password = FitnessProvider.GetSolution(chromosome)
+           };
+    }
+
+    public class PasswordFitness : IFitness
+    {
+        public PasswordFitness(string password) => Password = password;
+
+        string Password { get; }
+
+        public string GetSolution(IChromosome chromosome) =>
+            new string(chromosome.GetGenes().Select(x => (char)x.Value).ToArray());
+
+        public double Evaluate(IChromosome chromosome)
+        {
+            var guess = GetSolution(chromosome);
+
+            var diff =
+                guess
+                .Zip(Password, (x, y) => Math.Abs((int)x - (int)y))
+                .Sum(x => x == 0 ? 0 : x + 10);
+
+            return Math.Max(0, 1.0 - ((double)diff / (Password.Length * 50.0)));
+        }
+    }
+
+    public class PasswordChromosome : ChromosomeBase
+    {
+        public PasswordChromosome(int passwordLength) : base(passwordLength)
+        {
+            PasswordLength = passwordLength;
+
+            CreateGenes();
+        }
+
+        public int PasswordLength { get; set; }
+
+        // Could start from a random string, but this looks neat!
+        public override Gene GenerateGene(int geneIndex) //=> new Gene('?');
+        {
+            int index = RandomizationProvider.Current.GetInt(
+                PasswordSolver.CharLowerBound, PasswordSolver.CharUpperBound);
+
+            return new Gene((char)index);
+        }
+
+        public override IChromosome CreateNew() => new PasswordChromosome(PasswordLength);
+    }
+
+    public class StringMutation : MutationBase
+    {
+        // Select random char and increase/decrease it's (ASCII) value by a random amount
+        // while ensuring it stays within the valid range of char values
+        protected override void PerformMutate(IChromosome chromosome, float probability)
+        {
+            if (RandomizationProvider.Current.GetDouble() <= probability)
+            {
+                const int MaxMutationAmount = 10;
+
+                var genes = chromosome.GetGenes().ToList();
+
+                var index = RandomizationProvider.Current.GetInt(0, genes.Count);
+
+                int currVal = (char)genes[index].Value;
+
+                var newGene = currVal +
+                    RandomizationProvider.Current.GetInt(-MaxMutationAmount, MaxMutationAmount + 1);
+
+                newGene = Math.Min(newGene, PasswordSolver.CharUpperBound);
+                newGene = Math.Max(newGene, PasswordSolver.CharLowerBound);
+
+                chromosome.ReplaceGene(index, new Gene((char)newGene));
+            }
+        }
+    }
+}

@@ -1,0 +1,56 @@
+﻿@typeparam TResult
+@inherits SolverLayoutBase<TResult>
+
+<main class="main-page">
+    
+    <SolverControl
+        OnPlay="@RunSolver"
+        OnStop="@StopSolver"
+        IsSolving="@IsSolving"
+        SolverParameters="@Parameters"/>
+
+    <Container Fluid="false" >
+        <Row>
+            <Column ColumnSize="ColumnSize.Is3.OnDesktop.IsFull.OnTablet.IsFull.OnMobile">
+                <NavPanel SelectedIndex="@SelectedNavIndex" />
+
+                <div class="d-md-block d-none">
+                @ParameterSection
+                </div>
+            </Column>
+
+            <Column ColumnSize="ColumnSize.Is5.OnWidescreen.Is9.OnDesktop.IsFull.OnTablet" >
+
+                <div class="d-sm-block d-none">
+                <h2>Output</h2>
+                </div>
+
+                <div class="fitness-grid">
+                    <p>⬥ Gen: @(String.Format("{0:n0}", Generation))</p>
+                    <p>⬥ @FitnessStr</p>
+                    <p>⬥ @(String.Format("{0:n2}", ElapsedSeconds))s</p>
+                </div>
+
+                <FitnessChart @ref="fitnessChart" NumPoints="100" Generations="@Parameters.Generations" />
+               
+                <div class="@cssClass">
+                @OutputSection
+                </div>
+
+                <div class="d-md-none d-block">
+                @ParameterSection
+                </div>
+
+            </Column>
+
+                <Column id="problem-anchor" Margin="Margin.Is0.OnY.FromBottom" ColumnSize="ColumnSize.Is4.OnWidescreen.IsFull.OnDesktop" >
+                <h2>Problem</h2>
+                @ProblemSection
+            </Column>
+
+        </Row>
+    </Container>
+
+</main>
+
+<ErrorSnackbar Error="@error"/>

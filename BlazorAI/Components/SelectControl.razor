@@ -1,0 +1,13 @@
+﻿
+@typeparam TItem
+
+<Field style="margin: 8px 0;" >
+    <label style="width:100%;">@Label
+        <Select @bind-SelectedValue="@Value" Size="Size.Small" Margin="Margin.Is0" style="color:#777777;">
+            <TemplatedList Items="@Choices">
+                <SelectItem Value="@context.ItemValue">@context.ItemLabel</SelectItem>
+            </TemplatedList>
+        </Select>
+    </label>
+
+</Field>

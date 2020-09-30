@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazorise" Version="0.9.1.2" />
+    <PackageReference Include="Blazorise.Charts" Version="0.9.1.2" />
+    <PackageReference Include="Blazorise.Icons.Material" Version="0.9.1.2" />
+    <PackageReference Include="Blazorise.Material" Version="0.9.1.2" />
+    <PackageReference Include="Blazorise.Snackbar" Version="0.9.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.0-rc.1.20451.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.0-rc.1.20451.17" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="5.0.0-rc.1.20451.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\material\" />
+    <Folder Include="wwwroot\images\footer\" />
+    <Folder Include="wwwroot\images\nav\" />
+    <Folder Include="wwwroot\images\opengraph\" />
+    <Folder Include="wwwroot\images\problems\fivehouses\" />
+    <Folder Include="wwwroot\images\problems\eightqueens\" />
+    <Folder Include="wwwroot\images\problems\password\" />
+    <Folder Include="wwwroot\images\problems\travellingsalesman\" />
+    <Folder Include="wwwroot\js\material\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorAI.Shared\BlazorAI.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

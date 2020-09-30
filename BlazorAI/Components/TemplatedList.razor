@@ -1,0 +1,9 @@
+﻿@typeparam TItem
+
+@if (@Items != null)
+{
+    @foreach (var item in @Items)
+    {
+        @ChildContent(item)
+    }
+}

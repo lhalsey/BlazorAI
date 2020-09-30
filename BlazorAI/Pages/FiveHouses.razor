@@ -1,0 +1,57 @@
+﻿
+@page "/fivehouses"
+@inherits FiveHousesBase
+
+<SolverLayout
+    Solver="@this"
+    SelectedNavIndex="2">
+
+    <ParameterSection/>
+
+    <ProblemSection>
+
+        <p>The Five Houses problem (also known as Einstein's Riddle or the
+        <a href="https://en.wikipedia.org/wiki/Zebra_Puzzle" >Zebra Puzzle</a>)
+           asks:</p>
+        <blockquote>
+            <p>Who owns the zebra?</p>
+        </blockquote>
+        <p>There are numerous versions of this problem with various colours, nationalities,
+           pets, drinks and cars / cigarette brands, but these differences do not change the
+           logic of the puzzle.</p>
+
+        <h2>Approach</h2>
+        <p>We could solve this problem using deductive logic as explained in this
+           <a href="https://www.youtube.com/watch?time_continue=1&v=ELVWdaNESkk&feature=emb_logo">video</a>,
+           but in this instance we are going to try to evolve a random population into increasingly
+           better combinations.</p>
+        <p>Using the number of rules that pass as the fitness function works, but I have found
+           slighly better results by using the house distance between two expected values.</p>
+
+        <h2>Performance</h2>
+        <p>Sadly this approach often does not find the unique solution - it tends to converge
+           to a local minimum. Additionally, a "close" solution according to the
+           fitness function may actually be quite different from the ultimate solution.</p>
+        <p>Try playing with the generic algorithm parameters - it will solve it eventually!</p>
+
+    </ProblemSection>
+
+    <OutputSection>
+
+        <Card Margin="Margin.Is2.OnY.FromBottom">
+           
+            <div class="five-houses-grid-inner">
+                <TemplatedList Items="@houses">
+                    <House Traits="@context" />
+                </TemplatedList>
+            </div>
+
+            <div class="rules-grid">
+                <OrderedList Items="@rules" />
+            </div>
+
+        </Card>
+
+    </OutputSection>
+
+</SolverLayout>

@@ -1,0 +1,52 @@
+﻿
+@page "/eightqueens"
+@inherits EightQueensBase
+
+<SolverLayout
+    @ref="solverControl"
+    Solver="@this"
+    SelectedNavIndex="3" >
+
+    <ParameterSection>
+
+        <h2>Parameters</h2>
+
+        <div class="parameters-block">
+            <ParameterSlider Label="Number of Queens" @bind-Value="@numQueensSetting" Min="4" Max="16"/>
+
+            <Button class="btn-sm" @onclick="@Update">REGENERATE</Button>
+        </div>
+
+    </ParameterSection>
+
+    <ProblemSection>
+
+        <p>The <a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle" >Eight Queens problem</a> asks the following question:</p>
+        <blockquote>
+            <p>How can we arrange Eight Queens on an 8 x 8 chessboard such that none of them
+               share the same row, column or diagonal?</p>
+        </blockquote>
+
+        <h2>Approach</h2>
+        <p>We start with all the queens on the main diagonal as this ensures that they satisfy
+           the rule that no queen is on the same row or column - although it obviously violates
+           the diagonal rule!
+       </p>
+       <p>We then shuffle the column indexes of the queens so as to maintain the row / column
+          uniqueness while attempting to resolve the diagonal conflicts.</p>
+       <p>The fitness function is simply the number of queens which are not threatened.</p>
+
+       <h2>Performance</h2>
+       <p>This performs well for eight queens and usually finds a solution rapidly.</p>
+       <p>In order to solve the problem for up to 16 queens, it may be necessary to increase
+          the population size or modify the mutation percentage to explore more permutations.</p>
+
+    </ProblemSection>
+
+    <OutputSection>
+
+        <ChessBoard Queens="@solution" />
+
+    </OutputSection>
+
+</SolverLayout>

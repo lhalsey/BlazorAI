@@ -1,0 +1,11 @@
+﻿@typeparam TItem
+
+@if (@Items != null)
+{
+    <ol>
+        @foreach (var item in @Items)
+        {
+            <li>@item</li>
+        }
+    </ol>
+}

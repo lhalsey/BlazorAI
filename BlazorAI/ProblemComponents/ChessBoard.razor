@@ -1,0 +1,19 @@
+﻿
+<div>
+    <Card>
+        <div class="chess-board-inner" style="grid-template-columns: repeat(@NumQueens, 1fr);" >
+
+            @for (int i = 0; i < @NumQueens; i++)
+            {
+                @for (int j = 0; j < @NumQueens; j++)
+                {
+                    <ChessSquare
+                        Row="@i"
+                        Column="@j"
+                        HasQueen="@Queens.Any(x => x.Location.Y == i && x.Location.X == j)"
+                        IsInvalid="@Queens.Any(x => x.Location.Y == i && x.Location.X == j && x.IsInvalid)" />
+                }
+            }
+        </div>
+    </Card>
+</div>
