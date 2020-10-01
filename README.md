@@ -10,6 +10,8 @@ The Genetic Algorithm library used for evolving solutions is [GeneticSharp](http
 
 The Blazor component library used is [Blazorise](https://blazorise.com/) by [Mladen Macanovic](https://github.com/stsrki).
 
+This project was inspired by [Tensorflow Playground](https://playground.tensorflow.org/).
+
 ## Problems
 
 These are the problems that have been implemented so far:
