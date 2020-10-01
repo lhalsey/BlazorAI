@@ -62,14 +62,12 @@ namespace BlazorAI.Shared.Solvers
 
         public double Evaluate(IChromosome chromosome)
         {
-            var guess = GetSolution(chromosome);
-
             var diff =
-                guess
-                .Zip(Password, (x, y) => Math.Abs((int)x - (int)y))
-                .Sum(x => x == 0 ? 0 : x + 10);
+                chromosome.GetGenes()
+                .Zip(Password, (x, y) => Math.Abs((char)x.Value - y))
+                .Sum(x => x == 0 ? 0 : x + 10); // Reward exact match
 
-            return Math.Max(0, 1.0 - ((double)diff / (Password.Length * 50.0)));
+            return Math.Max(0, 1.0 - (diff / (Password.Length * 50.0)));
         }
     }
 
@@ -84,8 +82,7 @@ namespace BlazorAI.Shared.Solvers
 
         public int PasswordLength { get; set; }
 
-        // Could start from a random string, but this looks neat!
-        public override Gene GenerateGene(int geneIndex) //=> new Gene('?');
+        public override Gene GenerateGene(int geneIndex)
         {
             int index = RandomizationProvider.Current.GetInt(
                 PasswordSolver.CharLowerBound, PasswordSolver.CharUpperBound);
@@ -104,7 +101,8 @@ namespace BlazorAI.Shared.Solvers
         {
             if (RandomizationProvider.Current.GetDouble() <= probability)
             {
-                const int MaxMutationAmount = 10;
+                // ~10% of range from lower to upper seems to work well
+                const int MaxMutationAmount = 10; 
 
                 var genes = chromosome.GetGenes().ToList();
 
