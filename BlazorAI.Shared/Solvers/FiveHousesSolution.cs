@@ -6,15 +6,6 @@ using System.Linq;
 
 namespace BlazorAI.Shared.Solvers
 {
-    public enum Trait
-    {
-        Red, Green, Ivory, Yellow, Blue,
-        Zebra, Dog, HedgeHog, Horse, Fox,
-        Porsche, Chevy, Ford, Toyota, Subaru,
-        Coffee, Tea, OJ, Milk, Chocolate,
-        English, Spanish, Croatian, Norwegian, Japanese
-    };
-
     public class FiveHousesSolution
     {
         const int NumHouses = 5;
@@ -58,4 +49,13 @@ namespace BlazorAI.Shared.Solvers
 
         public IEnumerable<List<Trait>> Houses => 0.To(NumHouses - 1).Select(GetHouse);
     }
+
+    public enum Trait
+    {
+        Red, Green, Ivory, Yellow, Blue,
+        Zebra, Dog, HedgeHog, Horse, Fox,
+        Porsche, Chevy, Ford, Toyota, Subaru,
+        Coffee, Tea, OJ, Milk, Chocolate,
+        English, Spanish, Croatian, Norwegian, Japanese
+    };
 }

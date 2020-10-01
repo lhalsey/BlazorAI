@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace BlazorAI.Shared.Solvers
 {
+    /// <summary>
+    /// Chromsome consisting of integer genes
+    /// </summary>
     public class IntChromosome : ChromosomeBase
     {
         public IntChromosome(int[] inputGenes) : base(inputGenes.Length)

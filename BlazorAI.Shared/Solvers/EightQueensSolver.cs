@@ -12,6 +12,14 @@ using System.Linq;
 
 namespace BlazorAI.Shared.Solvers
 {
+    /// <summary>
+    /// Solver for https://en.wikipedia.org/wiki/Eight_queens_puzzle
+    /// The traditional problem has an 8 x 8 board with 8 queens, but we
+    /// generalise to N (between 4 and 16) queens.
+    /// Staring solution has all the queens on the main diagonal to satisfy row
+    /// and column conditions. We then evolve better solutions to resolve the
+    /// diagonal constraints by reordering the columns that the queens occupy.
+    /// </summary>
     public class EightQueensSolver : Solver<EightQueensSolution>
     {
         public EightQueensSolver(int numQueens)
@@ -48,6 +56,9 @@ namespace BlazorAI.Shared.Solvers
         }
     }
 
+    /// <summary>
+    /// How many of the queens are unthreatened
+    /// </summary>
     public class EightQueensFitness : IFitness
     {
         bool SameDiagonal(Point x, Point y) => Math.Abs(x.X - y.X) == Math.Abs(x.Y - y.Y);

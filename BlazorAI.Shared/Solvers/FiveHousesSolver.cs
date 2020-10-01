@@ -11,10 +11,17 @@ using GeneticSharp.Domain.Selections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using static MoreLinq.Extensions.ShuffleExtension;
 
 namespace BlazorAI.Shared.Solvers
 {
+    /// <summary>
+    /// Solver for https://en.wikipedia.org/wiki/Zebra_Puzzle
+    /// There are five houses and five traits (Nationality, Colour, Pet, Drink, Car).
+    /// Our chromosome consist of 5 arrays (one array per trait) of int[5] arrays
+    /// (one integer to represent the index of each house)
+    /// </summary>
     public class FiveHousesSolver : Solver<FiveHousesSolution>
     {
         public FiveHousesSolver()
@@ -104,6 +111,13 @@ namespace BlazorAI.Shared.Solvers
         }
     }
 
+    /// <summary>
+    /// For each rule we determine how many houses apart the expected trait is from
+    /// that in our solution.
+    /// E.g. Rule 9 says the Norwegian lives in the left-most house, but if our solution
+    /// has him in the right-most house then the penalty is 4.
+    /// This seems to work slightly better than just counting how many rules pass.
+    /// </summary>
     public class FiveHousesFitness : IFitness
     {
         public FiveHousesFitness(Rule[] rules, FiveHousesSolutionFactory factory)
@@ -145,10 +159,7 @@ namespace BlazorAI.Shared.Solvers
         const int NumTraits = 5;
         const int NumHouses = 5;
 
-        public FiveHousesChromosome() : base(NumTraits)
-        {
-            CreateGenes();
-        }
+        public FiveHousesChromosome() : base(NumTraits) => CreateGenes();
 
         public override Gene GenerateGene(int geneIndex)
         {
@@ -160,6 +171,10 @@ namespace BlazorAI.Shared.Solvers
         public override IChromosome CreateNew() => new FiveHousesChromosome();
     }
 
+    // We need to ensure each distinct value for each trait group is preserved.
+    // E.g. for colour we must have some combination of Red, Green, Yellow, Blue, Ivory.
+    // So when we mutate this group we can swap elements or reverse a subsequence,
+    // but cannot randomly mutate indiviudal values as we may end up with duplicates.
     public class TraitGroupMutation : MutationBase
     {
         const int NumHouses = 5;
@@ -172,22 +187,22 @@ namespace BlazorAI.Shared.Solvers
 
                 var geneIndex = RandomizationProvider.Current.GetInt(0, genes.Count);
 
-                // Reverse sequence
+                // Select two indexes within the trait group for swapping
                 var i1 = RandomizationProvider.Current.GetInt(0, NumHouses);
                 var i2 = RandomizationProvider.Current.GetInt(0, NumHouses);
 
                 var (m1, m2) = i1 < i2 ? (i1, i2) : (i2, i1);
 
-                var sequenceLength = m2 - m1 + 1;
-
                 var currVal = (int[])genes[geneIndex].Value;
 
+                // TODO: Determine whether reverse sequence is better
+                //var sequenceLength = m2 - m1 + 1;
                 //var start = currVal.Take(m1);
                 //var mid = currVal.Skip(m1).Take(sequenceLength).Reverse();
                 //var end = currVal.Skip(m2 + 1);
-
                 //var newVal = start.Concat(mid).Concat(end).ToArray();
 
+                // Swap two values
                 int[] newVal = new int[5];
                 Array.Copy(currVal, newVal, 5);
 

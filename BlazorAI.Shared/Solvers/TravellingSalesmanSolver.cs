@@ -14,6 +14,12 @@ using static MoreLinq.Extensions.PairwiseExtension;
 
 namespace BlazorAI.Shared.Solvers
 {
+    /// <summary>
+    ///  Solver for https://en.wikipedia.org/wiki/Travelling_salesman_problem
+    ///  We take a series of (X, Y) points as input and try to evolve the shortest
+    ///  route which visits all points and returns to the starting point.
+    ///  Our chromosome is an array of ints representing the index of points to visit.
+    /// </summary>
     public class TravellingSalesmanSolver : Solver<TravellingSalesmanSolution>
     {
         public TravellingSalesmanSolver(Point[] inputPoints)
@@ -52,6 +58,10 @@ namespace BlazorAI.Shared.Solvers
         }
     }
 
+    /// <summary>
+    /// Our fitness function is the total Euclidian distance between points
+    /// along our route (starting and ending at the origin).
+    /// </summary>
     public class TravellingSalesmanFitness : IFitness
     {
         public TravellingSalesmanFitness(Point[] inputPoints)
@@ -75,14 +85,14 @@ namespace BlazorAI.Shared.Solvers
             .Select(x => InputPoints[x])
             .ToArray();
 
-        // Minimise distance between consecutive points
-        // First (and last as is loop) point is fixed
         public double GetTotalDistance(IChromosome chromosome) =>
             GetTotalDistance(GetPoints(chromosome));
 
         double GetTotalDistance(Point[] points) =>
             points.Pairwise((x, y) => x.DistanceTo(y)).Sum();
 
+        // Use the original distance (a random route between all points)
+        // as the benchmark for our evolving solution
         public double Evaluate(IChromosome chromosome) =>
             Math.Max(0, 1.0 - (GetTotalDistance(chromosome) / InitialDistance));
     }

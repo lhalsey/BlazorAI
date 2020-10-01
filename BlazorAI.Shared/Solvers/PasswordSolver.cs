@@ -12,12 +12,18 @@ using System.Linq;
 
 namespace BlazorAI.Shared.Solvers
 {
+    /// <summary>
+    /// Solver for theoretical password system which (for some reason!)
+    /// provides feedback on how close a password is and allows unlimited guesses.
+    /// Chromsome is simply a string which has it's genes (chars) crossed over
+    /// and mutated within the fixed character range.
+    /// </summary>
     public class PasswordSolver : Solver<PasswordSolution>
     {
         // Allow characters from Space to Tilde which includes
         // numbers, upper & lower case letters & punctuation
-        public const int CharLowerBound = 32;
-        public const int CharUpperBound = 127;
+        public const int CharLowerBound = 32; // ' '
+        public const int CharUpperBound = 127; // '~'
 
         public PasswordSolver(string password)
         {
@@ -71,6 +77,10 @@ namespace BlazorAI.Shared.Solvers
         }
     }
 
+    /// <summary>
+    /// Char array to represent our guess
+    /// This seems to perform way better than when using FloatingPointChromosome
+    /// </summary>
     public class PasswordChromosome : ChromosomeBase
     {
         public PasswordChromosome(int passwordLength) : base(passwordLength)
