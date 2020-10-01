@@ -26,7 +26,7 @@ These are the problems that have been implemented so far:
 
 </br>
 
-![](docs/images/TravellingSalesman-2.png) ![](docs/images/TravellingSalesman-1.png)
+![](docs/images/TravellingSalesman-2.png) ![](docs/images/TravellingSalesman-3.png)
 
 ### Five Houses / Einstein's Riddle / Zebra Puzzle
 
