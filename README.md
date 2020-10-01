@@ -8,6 +8,8 @@ The live version of the site can be viewed at [www.blazor.ai](https://www.blazor
 
 The Genetic Algorithm library used for evolving solutions is [GeneticSharp](https://github.com/giacomelli/GeneticSharp) by [Diego Giacomelli](https://github.com/giacomelli).
 
+The Blazor component library used is [Blazorise](https://blazorise.com/) by [Mladen Macanovic](https://github.com/stsrki).
+
 ## Problems
 
 These are the problems that have been implemented so far:
