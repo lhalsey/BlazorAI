@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAI.Client", "BlazorAI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAI.Shared", "BlazorAI.Shared\BlazorAI.Shared.csproj", "{7F9ED03C-1B59-415F-A348-AB8D6D3585D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAI.Tests", "BlazorAI.Tests\BlazorAI.Tests.csproj", "{D5620350-C2BC-4ECB-A9FE-669D02FC7935}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAI.Tests", "BlazorAI.Tests\BlazorAI.Tests.csproj", "{D5620350-C2BC-4ECB-A9FE-669D02FC7935}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
