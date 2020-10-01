@@ -21,6 +21,7 @@ These are the problems that have been implemented so far:
 * [Demo](https://www.blazor.ai/travellingsalesman)
 * [Solver code](BlazorAI.Shared/Solvers/TravellingSalesmanSolver.cs)
 
+</br>
 <img src="docs/images/TravellingSalesman-1.png"/> <img src="docs/images/TravellingSalesman-2.png" />
 
 ### Five Houses / Einstein's Riddle / Zebra Puzzle
