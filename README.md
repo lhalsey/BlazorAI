@@ -1,4 +1,4 @@
-# BlazorAI
+![](docs/images/blazor-ai-logo.png)
 
 ## Overview
 
