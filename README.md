@@ -35,6 +35,8 @@ These are the problems that have been implemented so far:
 * [Description](https://en.wikipedia.org/wiki/Zebra_Puzzle)
 * [Demo](https://www.blazor.ai/fivehouses)
 * [Solver code](BlazorAI.Shared/Solvers/FiveHousesSolver.cs)
+
+</br>
   
 ![](docs/images/FiveHouses-1.png) ![](docs/images/FiveHouses-2.png)
 
@@ -46,6 +48,8 @@ These are the problems that have been implemented so far:
 * [Demo](https://www.blazor.ai/eightqueens)
 * [Solver code](BlazorAI.Shared/Solvers/EightQueensSolver.cs)
 
+</br>
+
 ![](docs/images/EightQueens-1.png) ![](docs/images/EightQueens-2.png)
 
 ### Password problem
@@ -54,6 +58,8 @@ These are the problems that have been implemented so far:
 
 * [Demo](https://www.blazor.ai/password)
 * [Solver code](BlazorAI.Shared/Solvers/PasswordSolver.cs)
+
+</br>
 
 ![](docs/images/Password-1.png) ![](docs/images/Password-2.png)
 
