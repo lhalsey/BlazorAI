@@ -16,7 +16,18 @@ This project was inspired by [Tensorflow Playground](https://playground.tensorfl
 
 These are the problems that have been implemented so far:
 
-* [Travelling Salesman problem](https://en.wikipedia.org/wiki/Travelling_salesman_problem)
-* [Five Houses / Einstein's Riddle / Zebra Puzzle](https://en.wikipedia.org/wiki/Zebra_Puzzle)
-* [Eight Queens problem](https://en.wikipedia.org/wiki/Eight_queens_puzzle)
-* Password problem
+### Travelling Salesman
+* [Description](https://en.wikipedia.org/wiki/Travelling_salesman_problem)
+* [Demo](https://www.blazor.ai/travellingsalesman)
+* [Solver code](BlazorAI.Shared/Solvers/TravellingSalesmanSolver.cs)
+
+![](docs/images/TravellingSalesman1.png) ![](docs/images/TravellingSalesman2.png)
+
+### Five Houses / Einstein's Riddle / Zebra Puzzle
+* [Description](https://en.wikipedia.org/wiki/Zebra_Puzzle)
+
+### Eight Queens problem
+* [Description](https://en.wikipedia.org/wiki/Eight_queens_puzzle)
+
+### Password problem
+
