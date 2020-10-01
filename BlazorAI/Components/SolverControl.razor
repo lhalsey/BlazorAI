@@ -5,17 +5,18 @@
     <Row>
         <Column style="padding:0;" ColumnSize="ColumnSize.IsFull.OnMobile.Is6.OnTablet.Is4.OnDesktop.Is2.OnWidescreen" >
         
+            @* TODO: Make Rewind and FastForward buttons do something! *@
             <div class="solver-button-group">
-                <Button class="btn-round btn-round-small">
-                    <Blazorise.Icon Name="MaterialIcons.SkipPrevious"/>
+                <Button class="btn-round btn-round-small" Disabled="true">
+                    <Blazorise.Icon Name="MaterialIcons.FastRewind"/>
                 </Button>
 
                 <Button @onclick="@ToggleSolve" class="btn-round" >
                     <Blazorise.Icon Name="@PlayIcon"/>
                 </Button>
                 
-                <Button class="btn-round btn-round-small">
-                    <Blazorise.Icon Name="MaterialIcons.SkipNext"/>
+                <Button class="btn-round btn-round-small" Disabled="true">
+                    <Blazorise.Icon Name="MaterialIcons.FastForward"/>
                 </Button>
 
                 <Button class="btn-round btn-round-smaller d-sm-none d-block"
