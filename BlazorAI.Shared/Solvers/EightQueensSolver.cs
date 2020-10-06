@@ -12,6 +12,10 @@ using System.Linq;
 
 namespace BlazorAI.Shared.Solvers
 {
+    public record Queen(Point Location, bool IsInvalid);
+
+    public record EightQueensSolution(Queen[] Queens);
+
     /// <summary>
     /// Solver for https://en.wikipedia.org/wiki/Eight_queens_puzzle
     /// The traditional problem has an 8 x 8 board with 8 queens, but we
@@ -47,13 +51,8 @@ namespace BlazorAI.Shared.Solvers
                 new ReverseSequenceMutation());
         }
 
-        protected override EightQueensSolution GetSolution(IChromosome best)
-        {
-            return new EightQueensSolution
-            {
-                Queens = FitnessProvider.GetSolution(best)
-            };
-        }
+        protected override EightQueensSolution GetSolution(IChromosome best) =>
+            new EightQueensSolution(Queens: FitnessProvider.GetSolution(best));
     }
 
     /// <summary>
@@ -72,9 +71,9 @@ namespace BlazorAI.Shared.Solvers
 
             return
                 points
-                .Select(x => new Queen {
-                    Location = x,
-                    IsInvalid = points.Count(y => SameDiagonal(x, y)) != 1 })
+                .Select(x => new Queen(
+                    Location: x,
+                    IsInvalid: points.Count(y => SameDiagonal(x, y)) != 1))
                 .ToArray();
         }
         

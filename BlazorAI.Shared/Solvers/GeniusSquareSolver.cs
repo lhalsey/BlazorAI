@@ -15,6 +15,8 @@ using System.Linq;
 
 namespace BlazorAI.Shared.Solvers
 {
+    public record GeniusSquareSolution(int[] CellValues);
+
     /// <summary>
     /// Solver for Genius Square board game, https://www.happypuzzle.co.uk/30cubed/genius-square
     /// There are nine shapes that need to be placed, but we only encode eight of these in our
@@ -51,7 +53,7 @@ namespace BlazorAI.Shared.Solvers
         }
 
         protected override GeniusSquareSolution GetSolution(IChromosome chromosome) =>
-            new GeniusSquareSolution { CellValues = FitnessProvider.GetSolution(chromosome) };
+            new GeniusSquareSolution(CellValues: FitnessProvider.GetSolution(chromosome));
     }
 
     public class GeniusSquareFitness : IFitness

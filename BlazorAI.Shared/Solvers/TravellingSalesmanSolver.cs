@@ -14,6 +14,8 @@ using static MoreLinq.Extensions.PairwiseExtension;
 
 namespace BlazorAI.Shared.Solvers
 {
+    public record TravellingSalesmanSolution(Point[] Points, double Distance);
+
     /// <summary>
     ///  Solver for https://en.wikipedia.org/wiki/Travelling_salesman_problem
     ///  We take a series of (X, Y) points as input and try to evolve the shortest
@@ -48,14 +50,12 @@ namespace BlazorAI.Shared.Solvers
                 new ReverseSequenceMutation());
         }
 
-        protected override TravellingSalesmanSolution GetSolution(IChromosome best)
-        {
-            return new TravellingSalesmanSolution
-            {
-                Points = FitnessProvider.GetPoints(best),
-                Distance = Math.Round(FitnessProvider.GetTotalDistance(best), 2)
-            };
-        }
+        protected override TravellingSalesmanSolution GetSolution(IChromosome best) =>
+            new TravellingSalesmanSolution
+            (
+                Points: FitnessProvider.GetPoints(best),
+                Distance: Math.Round(FitnessProvider.GetTotalDistance(best), 2)
+            );
     }
 
     /// <summary>

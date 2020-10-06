@@ -12,6 +12,8 @@ using System.Linq;
 
 namespace BlazorAI.Shared.Solvers
 {
+    public record PasswordSolution(string Password);
+
     /// <summary>
     /// Solver for theoretical password system which (for some reason!)
     /// provides feedback on how close a password is and allows unlimited guesses.
@@ -51,10 +53,7 @@ namespace BlazorAI.Shared.Solvers
         }
 
         protected override PasswordSolution GetSolution(IChromosome chromosome) =>
-           new PasswordSolution
-           {
-               Password = FitnessProvider.GetSolution(chromosome)
-           };
+           new PasswordSolution(Password: FitnessProvider.GetSolution(chromosome));
     }
 
     public class PasswordFitness : IFitness

@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace BlazorAI.Shared.Solvers
 {
-    // Let's embrace .NET 5.0 by using a record!
-    public record Shape(int Id, int Height, int Width, int[] Offsets);
-
     public class GeniusSquareSolutionFactory
     {
+        // Let's embrace .NET 5.0 by using a record!
+        public record Shape(int Id, int Height, int Width, int[] Offsets);
+
         const int ShapeSize = 4; // We can represent all shapes in a 4 x 4 grid
         const int GridSize = 6;
 
