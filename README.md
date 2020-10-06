@@ -65,3 +65,15 @@ These are the problems that have been implemented so far:
 
 ![](docs/images/Password-1.png) ![](docs/images/Password-2.png)
 
+### Genius Square problem
+
+> How can we arrange the nine tetris-like blocks on the grid avoiding the blockers?
+
+* [Description](https://www.happypuzzle.co.uk/30cubed/genius-square)
+* [Demo](https://www.blazor.ai/geniussquare)
+* [Solver code](BlazorAI.Shared/Solvers/GeniusSquareSolver.cs)
+
+</br>
+
+![](docs/images/GeniusSquare-1.png) ![](docs/images/GeniusSquare-2.png)
+
