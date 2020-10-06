@@ -12,6 +12,8 @@ The Blazor component library used is [Blazorise](https://blazorise.com/) by [Mla
 
 This project was inspired by [Tensorflow Playground](https://playground.tensorflow.org/).
 
+Icons were sourced from [flaticon](https://www.flaticon.com/) from authors [Freepik](https://www.flaticon.com/authors/freepik), [surang](https://www.flaticon.com/authors/surang) & [Smashicons](https://www.flaticon.com/authors/smashicons).
+
 ## Problems
 
 These are the problems that have been implemented so far:
@@ -26,7 +28,7 @@ These are the problems that have been implemented so far:
 
 </br>
 
-![](docs/images/TravellingSalesman-2.png) ![](docs/images/TravellingSalesman-1.png)
+![](docs/images/TravellingSalesman-2.png) ![](docs/images/TravellingSalesman-3.png)
 
 ### Five Houses / Einstein's Riddle / Zebra Puzzle
 
