@@ -17,5 +17,7 @@ namespace BlazorAI.Client.ProblemComponents
         public bool IsInvalid { get; set; }
 
         private string FillColour => (Row + Column) % 2 == 0 ? "#cccccc" : "white";
+
+        private string ShadowColour => (Row + Column) % 2 == 0 ? "url(#black-shadow)" : "url(#white-shadow)";
     }
 }
