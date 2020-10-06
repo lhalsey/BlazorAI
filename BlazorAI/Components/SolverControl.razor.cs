@@ -1,9 +1,7 @@
 ﻿using BlazorAI.Shared.Types;
-using BlazorAI.Shared.Utility;
 using Blazorise.Icons.Material;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BlazorAI.Client.Components
 {
@@ -42,11 +40,15 @@ namespace BlazorAI.Client.Components
                 SolverParameters.SolverSelection.Tournament,
                 SolverParameters.SolverSelection.Roulette);
 
-        private List<SelectItem<float>> crossoverChoices =
-            SelectHelper.GetItems(0.To(20).Select(x => x * 0.05f).ToArray());
+        // Hard-coded values rather than Enumerable.Range with multiplier as that leads to
+        // rounding errors, e.g. 0.6500001
+        private static float[] range =
+            new[] { 0.0f, 0.05f, 0.1f, 0.15f, 0.2f, 0.25f, 0.3f, 0.35f, 0.4f, 0.45f, 0.5f,
+                    0.55f, 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f, 0.95f, 1.0f };
 
-        private List<SelectItem<float>> mutationChoices =
-            SelectHelper.GetItems(0.To(20).Select(x => x * 0.05f).ToArray());
+        private List<SelectItem<float>> crossoverChoices = SelectHelper.GetItems(range);
+
+        private List<SelectItem<float>> mutationChoices = SelectHelper.GetItems(range);
 
         private void ToggleSolve()
         {

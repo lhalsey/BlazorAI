@@ -26,5 +26,10 @@ namespace BlazorAI.Client.Services
             CancellationTokenSource token,
             string password,
             SolverParameters parameters);
+
+        public IAsyncEnumerable<Result<GeniusSquareSolution>> GetGeniusSquareSolution(
+            CancellationTokenSource token,
+            int[] blockers,
+            SolverParameters parameters);
     }
 }

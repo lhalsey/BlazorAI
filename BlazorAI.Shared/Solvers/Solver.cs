@@ -94,6 +94,8 @@ namespace BlazorAI.Shared.Solvers
                     }
                 }
 
+                await Task.Yield();
+
                 ga.Termination = new GenerationNumberTermination(i + 1);
                 ga.Resume();
             }

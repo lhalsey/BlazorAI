@@ -1,0 +1,41 @@
+﻿ 
+<div style="display:grid; grid-template-columns: 6fr 2fr;">
+
+    @* Dice *@
+    <div style="grid-row:1; grid-column:1;">
+        <div class="dice-container" >
+            <p/>    
+            <TemplatedList Items="@Dice">
+                <div class="genius-square-dice" >
+                    <h2>@context</h2>
+                </div>
+            </TemplatedList>
+        </div>
+    </div>
+
+    @* Unplaced shapes *@
+    <div style="grid-row:1 / span 2; grid-column:2; ">
+        <div class="genius-square-unplaced" >
+
+             <div class="genius-square-unplaced-col" >
+                <TemplatedList Items="@MissingValues1">
+                    <GeniusSquareCell Value="@context"/>
+                </TemplatedList>
+
+            </div>
+
+            <div class="genius-square-unplaced-col" >
+                <TemplatedList Items="@MissingValues2">
+                    <GeniusSquareCell Value="@context"/>
+                </TemplatedList>
+
+            </div>
+        </div>
+    </div>
+
+     @* Main grid *@
+    <div style="grid-row:2; grid-column:1;">
+        <GeniusSquareGrid Values="@Values"/>
+    </div>
+
+</div>

@@ -1,0 +1,52 @@
+﻿
+@page "/geniussquare"
+@inherits GeniusSquareBase
+
+<SolverLayout
+    @ref="solverControl"
+    Solver="@this"
+    SelectedNavIndex="5" >
+
+   <ParameterSection>
+
+        <h2>Parameters</h2>
+
+        <div class="parameters-block">
+            <ParameterSlider Label="Random Seed" @bind-Value="@randomSeedSetting" Min="0" Max="255"/>
+
+            <Button class="btn-sm" @onclick="@Update">REGENERATE</Button>
+        </div>
+
+    </ParameterSection>
+
+    <ProblemSection>
+
+        <p>The <a href="https://www.happypuzzle.co.uk/30cubed/genius-square" >Genius Square problem</a> asks the following question:</p>
+        <blockquote>
+            <p>How can we arrange the nine tetris-like blocks on the grid avoiding the blockers?</p>
+        </blockquote>
+
+        <h2>Approach</h2>
+        <p>Each shape is encoded as three integers representing column, row and orientation.</p>
+        <p>We evaluate the fitness by trying to place the shapes on the board. A shape is not placed if it
+           overlaps an existing shape or a blocker.</p>
+        <p>The total number of squares covered indicates how good a solution is.</p>
+
+       <h2>Performance</h2>
+       <p>This approach can perform well, but often the algorithm struggles with what looks
+          like an easy position with just two shapes left.</p>
+       <p>The problem seems to be that the shape would need to be mutated by the exact amount
+          in row, column and orientation to fill the remaining gap.</p>
+
+
+    </ProblemSection>
+
+    <OutputSection>      
+
+        <Card Padding="Padding.Is3">
+            <GeniusSquareBoard Values="@cellValues" Dice="@dice" />
+        </Card>
+
+    </OutputSection>
+
+</SolverLayout>

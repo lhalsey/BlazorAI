@@ -1,0 +1,42 @@
+﻿
+<svg viewBox="-2 -2 54 54" >
+
+    <defs>
+        <radialGradient id="radialGradient">
+            <stop offset="10%" stop-color="gold" />
+            <stop offset="95%" stop-color="brown" />
+        </radialGradient>
+     </defs>
+
+    @* Background *@
+    <rect x="0" y="0" width="50" height="50" fill="#f7f7f7" stroke="#999999" stroke-width="1" />
+
+    @* Shape border *@
+    <rect x="-5" y="-5" width="60" height="60" fill="@Color" stroke-width="0" fill-opacity="@Opacity" />
+
+    @* Shape fill *@
+    <rect x="0" y="0" width="50" height="50"
+        stroke-width="2"
+        fill="@Color"
+        stroke="@Color"
+        fill-opacity="@Opacity"
+        stroke-opacity="@(Opacity * 2.0)"  />
+
+    @* Shape highlight *@
+    <polygon points="5,5 5,45 45,5"
+        stroke-width="2"
+        fill="@Color"
+        stroke="@Color"
+        fill-opacity="@(Opacity * 0.25)"
+        stroke-opacity="@(Opacity * 0.5)" />
+
+    @* Blocker *@
+    <circle cx="25" cy="25" r="22"
+        stroke-width="2"
+        fill="url('#radialGradient')"
+        stroke="#735627" 
+        fill-opacity="@BlockerOpacity"
+        stroke-opacity="@BlockerOpacity" />
+
+</svg>
+

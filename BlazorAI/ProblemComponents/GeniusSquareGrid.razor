@@ -1,0 +1,22 @@
+﻿
+<div class="genius-square-labels" style="grid-template-columns: 0.5fr repeat(6, 1fr);">
+    <TemplatedList TItem="char" Items="@(" 123456")">
+        <p>@context</p>
+    </TemplatedList>
+</div>
+
+<div style="display:grid; grid-template-columns: 0.5fr 6fr">
+
+    <div class="genius-square-labels" style="grid-template-rows: repeat(6, 1fr);">
+        <TemplatedList TItem="char" Items="@("ABCDEF")">
+            <p>@context</p>
+        </TemplatedList>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(6, 1fr);">
+        <TemplatedList Items="@Values">
+            <GeniusSquareCell Value="@context"/>
+        </TemplatedList>
+    </div>
+
+</div>

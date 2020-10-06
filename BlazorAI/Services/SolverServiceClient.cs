@@ -29,5 +29,11 @@ namespace BlazorAI.Client.Services
             string password,
             SolverParameters parameters) =>
                 new PasswordSolver(password).Solve(parameters);
+
+        public IAsyncEnumerable<Result<GeniusSquareSolution>> GetGeniusSquareSolution(
+            CancellationTokenSource token,
+            int[] blockers,
+            SolverParameters parameters) =>
+                new GeniusSquareSolver(blockers).Solve(parameters);
     }
 }

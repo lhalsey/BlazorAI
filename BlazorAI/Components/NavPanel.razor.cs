@@ -8,7 +8,7 @@ namespace BlazorAI.Client.Components
 {
     public partial class NavPanel : ComponentBase
     {
-        const int NumButtons = 4;
+        const int NumButtons = 5;
 
         [Parameter]
         public int SelectedIndex { get; set; }

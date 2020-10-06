@@ -684,13 +684,61 @@ input[type=range] {
     box-shadow: 0 2px 4px rgba(100,100,100,0.2);
 }
 
+/* Genius Square problem */
 
+.genius-square-dice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    background: white;
+    border: 1px solid #999999;
+    box-shadow: 0 2px 4px rgba(100,100,100,0.2);
+    border-radius: 5px;
+}
+
+    .genius-square-dice h2 {
+        margin:0;
+        color:#666666;
+    }
+
+.genius-square-labels {
+    display:grid;
+    justify-content:center;
+    align-items:center;
+}
+
+    .genius-square-labels p {
+        text-align: center;
+        margin: 0;
+        font-size: 15px;
+    }
+
+.dice-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    margin: 0 0 10px 0;
+    justify-content: center;
+}
+
+.genius-square-unplaced {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10%;
+    margin-left: 20%
+}
+
+.genius-square-unplaced-col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    opacity: 1;
+    grid-template-rows: repeat(17,1fr);
+}
 
 /* ------------- */
 /* Needed?       */
 /* --------------*/
-
-
 a, .btn-link {
     color: #0366d6;
 }
