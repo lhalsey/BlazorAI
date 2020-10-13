@@ -113,11 +113,9 @@ namespace BlazorAI.Shared.Solvers
                 // ~10% of range from lower to upper seems to work well
                 const int MaxMutationAmount = 10; 
 
-                var genes = chromosome.GetGenes().ToList();
+                var index = RandomizationProvider.Current.GetInt(0, chromosome.Length);
 
-                var index = RandomizationProvider.Current.GetInt(0, genes.Count);
-
-                int currVal = (char)genes[index].Value;
+                int currVal = (char)chromosome.GetGene(index).Value;
 
                 var newGene = currVal +
                     RandomizationProvider.Current.GetInt(-MaxMutationAmount, MaxMutationAmount + 1);
