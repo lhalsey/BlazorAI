@@ -38,7 +38,9 @@
 
        <h2>Performance</h2>
        <p>This performs well for eight queens and usually finds a solution rapidly.</p>
-       <p>In order to solve the problem for up to 16 queens, it may be necessary to increase
+       <p>In order to solve the problem for up to
+        <a @onclick="@(() => Update(16))" style="text-decoration:underline; color:#0D658C;">16 queens</a>
+          , it may be necessary to increase
           the population size or modify the mutation percentage to explore more permutations.</p>
 
     </ProblemSection>

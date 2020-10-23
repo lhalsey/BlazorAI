@@ -31,7 +31,7 @@ namespace BlazorAI.Shared.Solvers
             FitnessProvider = new GeniusSquareFitness(blockers);
         }
 
-        public const int Shapes = 8; // Don't include single unit square as we just place in the last empty space
+        public const int Shapes = 7; //8; // Don't include single unit square as we just place in the last empty space
         public const int GenesPerShape = 3; // Orientation, Column, Row
         public const int MaxValue = 360; // This number gives a good range and is divisible by many numbers
 
@@ -48,7 +48,7 @@ namespace BlazorAI.Shared.Solvers
                 population,
                 FitnessProvider,
                 new EliteSelection(),
-                new TwoPointCrossover(),
+                new UniformCrossover(),
                 new IntMutation());
         }
 
@@ -64,6 +64,7 @@ namespace BlazorAI.Shared.Solvers
         
         const int GenesPerShape = 3; // Orientation, Column, Row
         const int ShapeStartIndex = 2; // Blocker is 1, shapes start from 2
+        const int DoubleUnitShapeIndex = 9;
         const int SingleUnitShapeIndex = 10;
 
         public GeniusSquareFitness(int[] blockers)
@@ -82,9 +83,11 @@ namespace BlazorAI.Shared.Solvers
 
         public int[] GetSolution(IChromosome chromosome)
         {
-            var values = chromosome.GetGenes().Select(x => (int)x.Value);
-
-            var shapes = values.Batch(GenesPerShape).Select(x => x.ToArray()).Index().ToArray();
+            var shapes =
+                chromosome.GetGenes()
+                .Select(x => (int)x.Value)
+                .Batch(GenesPerShape, x => x.ToArray())
+                .Index();
 
             // Determine which grid cells each shape would occupy if placed
             var shapeCells =
@@ -98,6 +101,8 @@ namespace BlazorAI.Shared.Solvers
 
             int[] solution = EmptySolutionWithBlockers.ToArray();
 
+            int placedShapes = 0;
+
             // Try to place each shape if no part of the shape would cover another (already-placed)
             // shape or blocker. We try to place the more "difficult" shapes first.
             // Note: Originally overlapping was allowed, but the UI looked a mess and performance
@@ -106,6 +111,8 @@ namespace BlazorAI.Shared.Solvers
             {
                 if (shapeCells[i].All(x => solution[x] == 0))
                 {
+                    placedShapes++;
+
                     foreach (int index in shapeCells[i])
                     {
                         solution[index] = i + ShapeStartIndex;
@@ -113,11 +120,35 @@ namespace BlazorAI.Shared.Solvers
                 }
             }
 
-            // If just one empty cell then place the single unit shape
-            // TODO: Consider also placing penultimate shape if it fits
-            if (solution.Count(x => x == 0) == 1)
+            bool IsAdjacent(int i1, int i2)
             {
-                solution[Array.IndexOf(solution, 0)] = SingleUnitShapeIndex;
+                var (r1, c1) = (i1 / GridWidth, i1 % GridWidth);
+                var (r2, c2) = (i2 / GridWidth, i2 % GridWidth);
+
+                return (Math.Abs(r1 - r2) + Math.Abs(c1 - c2) == 1);
+            }
+
+            // The single and double unit shapes are the easiest to place
+            // so handle these last. It's more efficient to find the gaps and
+            // place them there than to wait for mutation to move them to the
+            // correct place.
+            if (placedShapes == GeniusSquareSolver.Shapes)
+            {
+                var empty =
+                    solution
+                    .Index()
+                    .Where(x => x.Value == 0)
+                    .Select(x => x.Key)
+                    .ToList();
+
+                var sol = empty.Permutations().FirstOrDefault(x => IsAdjacent(x[0], x[1]));
+
+                if (sol != null)
+                {
+                    solution[sol[0]] = DoubleUnitShapeIndex;
+                    solution[sol[1]] = DoubleUnitShapeIndex;
+                    solution[sol[2]] = SingleUnitShapeIndex;
+                }
             }
 
             return solution;
@@ -125,7 +156,7 @@ namespace BlazorAI.Shared.Solvers
 
         public double Evaluate(IChromosome chromosome)
         {
-            const double PenaltyWeight = 0.5; // Trial & error
+            const double PenaltyWeight = 0.25; // Trial & error
 
             int[] solution = GetSolution(chromosome);
 
@@ -144,6 +175,20 @@ namespace BlazorAI.Shared.Solvers
             // Penalise empty cells the further they are from the centre
             // We have a greater chance of fitting a shape into the gaps if the gaps are close
             var penalty = emptyCells.Sum(x => GetDistanceFromCentre(x.Key));
+
+            bool HasEmptyAdjacent(int index)
+            {
+                var (row, col) = (index / GridWidth, index % GridWidth);
+
+                return
+                    row > 0 && solution[index - GridWidth] == 0 || // Up
+                    row < GridHeight - 1 && solution[index + GridWidth] == 0 || // Down
+                    col > 0 && solution[index - 1] == 0 || // Left
+                    col < GridWidth - 1 && solution[index + 1] == 0; // Right
+            }
+
+            // Penalise empty cells with no other empty cells surrounding them
+            penalty += emptyCells.Count(x => !HasEmptyAdjacent(x.Key)) * 2;
 
             return Math.Max(0.0, 1.0 - ((emptyCells.Count() + penalty * PenaltyWeight) / GridCells));
         }

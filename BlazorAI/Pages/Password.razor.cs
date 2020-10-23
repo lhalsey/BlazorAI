@@ -1,21 +1,14 @@
 ﻿using BlazorAI.Client.Components;
-using BlazorAI.Client.Services;
 using BlazorAI.Shared.Solvers;
 using BlazorAI.Shared.Types;
-using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlazorAI.Client.Pages
 {
-    public class PasswordBase : ComponentBase, ISolverPage<PasswordSolution>
+    public class PasswordBase : PageBase, ISolverPage<PasswordSolution>
     {
-        [Inject]
-        public ISolverService SolverService { get; set; }
-
         public SolverParameters DefaultParameters =>
             new SolverParameters
             {
@@ -55,6 +48,15 @@ namespace BlazorAI.Client.Pages
         private int problemNum = 1;
 
         protected override void OnInitialized() => Initialise();
+
+        protected async Task Update(int problem)
+        {
+            problemNumSetting = problem;
+
+            await Update();
+
+            await ScrollToTop();
+        }
 
         protected async Task Update()
         {

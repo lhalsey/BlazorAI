@@ -1,8 +1,6 @@
 ﻿using BlazorAI.Client.Components;
-using BlazorAI.Client.Services;
 using BlazorAI.Shared.Solvers;
 using BlazorAI.Shared.Types;
-using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +9,8 @@ using System.Threading.Tasks;
 
 namespace BlazorAI.Client.Pages
 {
-    public partial class TravellingSalesmanBase : ComponentBase, ISolverPage<TravellingSalesmanSolution>
+    public partial class TravellingSalesmanBase : PageBase, ISolverPage<TravellingSalesmanSolution>
     {
-        [Inject]
-        public ISolverService SolverService { get; set; }
-
         public SolverParameters DefaultParameters =>
            new SolverParameters
            {
@@ -64,6 +59,16 @@ namespace BlazorAI.Client.Pages
         private int randomSeed = 85;
 
         protected override void OnInitialized() => SetPoints();
+
+        protected async Task Update(int nPoints, int seed)
+        {
+            numPointsSetting = nPoints;
+            randomSeedSetting = seed;
+
+            await Update();
+
+            await ScrollToTop();
+        }
 
         protected async Task Update()
         {

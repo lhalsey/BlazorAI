@@ -134,7 +134,7 @@ header {
 
 .blazor-logo-img {
     /*margin: 8px 0px 0px 8px;*/
-    width: calc(4em + 10vw);
+    width: calc(6em + 10vw);
     min-width: 110px;
     max-width: 200px;
 }
@@ -476,15 +476,6 @@ input[type=range] {
     padding: 3px;
 }
 
-.btn-round-smaller {
-    width: 28px;
-    min-width: 28px;
-    height: 28px;
-    min-height: 28px;
-    padding: 1px;
-    font-size: 18px;
-    color: #555555;
-}
 
 .btn-more {
     position: absolute;

@@ -1,9 +1,13 @@
 ﻿using BlazorAI.Shared.Solvers;
+using BlazorAI.Shared.Types;
 using FluentAssertions;
 using GeneticSharp.Domain;
-using GeneticSharp.Domain.Crossovers;
 using GeneticSharp.Domain.Chromosomes;
+using GeneticSharp.Domain.Crossovers;
+using System;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BlazorAI.Tests
@@ -36,14 +40,14 @@ namespace BlazorAI.Tests
 
         protected override Solver<GeniusSquareSolution> GetSolver()
         {
-            var blockers = new int[7];
+            var blockers = new int[] { 0, 4, 5, 6, 16, 20, 29 }; // Seed 85
 
             return new GeniusSquareSolver(blockers);
         }
 
         protected override void AssertCrossover(GeneticAlgorithm ga)
         {
-            ga.Crossover.Should().BeOfType<TwoPointCrossover>();
+            ga.Crossover.Should().BeOfType<UniformCrossover>();
         }
 
         protected override void AssertMutation(GeneticAlgorithm ga)
@@ -108,7 +112,6 @@ namespace BlazorAI.Tests
         [InlineData(LongL, 4)]
         [InlineData(Line3, 3)]
         [InlineData(ShortL, 3)]
-        [InlineData(Line2, 2)]
         public void Solver_TestGetIndexes_CompleteGridCoverage(int shapeId, int shapeSize)
         {
             // Arrange
@@ -178,22 +181,74 @@ namespace BlazorAI.Tests
         [Fact]
         public void Solver_NearCompleteSolution_FitnessEvaluatesToGoodScore()
         {
-            // Arrange
-            var (fitness, chromosome) = GetCorrectSolution();
+            for (int i = 0; i < 100_000; i++)
+            {
+                // Arrange
+                var (fitness, chromosome) = GetCorrectSolution();
 
-            // Shift square to far left on top of blocker
-            // This leaves 4 empty cells for the square and one for the single unit
-            // shape which is no longer placed
-            // The distance penalty sums to 11 and is multiplied by the penalty weight (0.5)
-            // to give 1.0 - ((5 + 5.5) / 36)
-            chromosome.ReplaceGene(1, new Gene(0)); 
+                // Shift square to far left on top of blocker
+                // This leaves 4 empty cells for the square and one for the single unit
+                // shape which is no longer placed
+                // The distance penalty sums to 11 and is multiplied by the penalty weight (0.5)
+                // to give 1.0 - ((5 + 5.5) / 36)
+                chromosome.ReplaceGene(1, new Gene(0));
 
-            // Act
-            double score = fitness.Evaluate(chromosome);
+                // Act
+                double score = fitness.Evaluate(chromosome);
 
-            // Assert
-            score.Should().BeApproximately(0.7083, precision: 0.0001);
+                // Assert
+                score.Should().BeApproximately(0.7153, precision: 0.0001);
+            }
         }
+
+        [Fact(Skip = "Research only - long running")]
+        public async Task Solver_SolvesEveryTime()
+        {
+            const int NumRuns = 100;
+            string timestamp = DateTime.Now.ToLongTimeString().Replace(":", "_");
+
+            string path = $"Output_{timestamp}.csv";
+
+            for (int i = 0; i <= 255; i++)
+            {
+                var blockers = GetBlockers(i);
+                var solver = new GeniusSquareSolver(blockers);
+
+                var solves = await GetSolveRate(solver, NumRuns);
+
+                string output = $"{i},{solves}\n";
+
+                File.AppendAllText(path, output);
+            }
+        }
+
+        private async Task<double> GetSolveRate(GeniusSquareSolver solver, int runs)
+        {
+            int solves = 0;
+
+            // Arrange
+            for (int i = 0; i < runs; i++)
+            {
+                var parameters = new SolverParameters
+                {
+                    Generations = 1_000,
+                    Population = 100,
+                    Selection = SolverParameters.SolverSelection.Elite,
+                    CrossoverProbability = 0.5f,
+                    MutationProbability = 0.5f
+                };
+
+                // Act
+                var results = await solver.Solve(parameters).ToListAsync();
+
+                // Assert
+                double fitness = results.Last().Fitness;
+                solves += fitness == 100.0 ? 1 : 0;
+            }
+
+            return (double)solves / runs;
+        }
+
 
         private (GeniusSquareFitness, GeniusSquareChromosome) GetCorrectSolution()
         {
@@ -211,6 +266,8 @@ namespace BlazorAI.Tests
             // 5 3 3 2 2 X
             // 5 3 1 1 1 1
 
+            // Note: Last two shapes are placed automatically so do not form
+            // part of the solution 
             var genes =
                 new[]
                 {
@@ -221,7 +278,7 @@ namespace BlazorAI.Tests
                     Orientation_8_Of_8, 0, 0, // 4 = LongL
                     Vertical, 0, 270, // 5 = Line3
                     Orientation_2_Of_4, 288, 72, // 6 = ShortL
-                    Horizontal, 144, 120 // 7 = Line2
+                    // Horizontal, 144, 120 // 7 = Line2
                     // 8 = Unit block
                 }
                 .Select(x => new Gene(x)).ToArray();
@@ -229,6 +286,43 @@ namespace BlazorAI.Tests
             chromosome.ReplaceGenes(0, genes);
 
             return (fitness, chromosome);
+        }
+
+        private int[] GetBlockers(int randomSeed)
+        {
+            const int GridSize = 6;
+            var r = new Random(randomSeed);
+
+            var diceValues =
+                new string[]
+                {
+                    "A1 C1 D1 D2 E2 F3",
+                    "A2 B2 C2 A3 B1 B3",
+                    "C3 D3 E3 B4 C4 D4",
+                    "E1 F2 F2 B6 A5 A5",
+                    "A4 B5 C6 C5 D6 F6",
+                    "E4 F4 E5 F5 D5 E6",
+                    "F1 F1 F1 A6 A6 A6"
+                };
+
+            int GetCellIndex(string cellValue)
+            {
+                var row = cellValue[0] - 'A';
+                var col = cellValue[1] - '1';
+
+                return row * GridSize + col;
+            }
+
+            string RollDice(string values)
+            {
+                var roll = r.Next(0, GridSize);
+
+                return values.Split(' ')[roll];
+            }
+
+            var dice = diceValues.Select(RollDice).OrderBy(x => x).ToArray();
+
+            return dice.Select(GetCellIndex).ToArray();
         }
     }
 }

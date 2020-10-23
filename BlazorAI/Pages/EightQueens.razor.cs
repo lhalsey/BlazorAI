@@ -1,9 +1,7 @@
 ﻿using BlazorAI.Client.Components;
-using BlazorAI.Client.Services;
 using BlazorAI.Shared.Solvers;
 using BlazorAI.Shared.Types;
 using BlazorAI.Shared.Utility;
-using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +11,8 @@ using System.Threading.Tasks;
 
 namespace BlazorAI.Client.Pages
 {
-    public class EightQueensBase : ComponentBase, ISolverPage<EightQueensSolution>
+    public class EightQueensBase : PageBase, ISolverPage<EightQueensSolution>
     {
-        [Inject]
-        public ISolverService SolverService { get; set; }
-
         public SolverParameters DefaultParameters =>
            new SolverParameters
            {
@@ -59,6 +54,15 @@ namespace BlazorAI.Client.Pages
         protected int numQueensSetting = 8;
 
         protected Queen[] solution = new Queen[0];
+
+        protected async Task Update(int queens)
+        {
+            numQueensSetting = queens;
+
+            await Update();
+
+            await ScrollToTop();
+        }
 
         protected async Task Update()
         {

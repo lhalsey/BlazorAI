@@ -33,17 +33,21 @@
         <p>The total number of squares covered indicates how good a solution is.</p>
 
        <h2>Performance</h2>
-       <p>This approach can perform well, but often the algorithm struggles with what looks
-          like an easy position with just two shapes left.</p>
-       <p>The problem seems to be that the shape would need to be mutated by the exact amount
-          in row, column and orientation to fill the remaining gap.</p>
-
+       <p>This approach performs well on the 256 (out of a possible 
+       <a href="https://mangosgaming.uk/portfolio/review-genius-square/">62,208</a>) cases that I have tested
+          averaging a ~75% success rate for solving using the default parameters.</p>
+       <p>The strategy attempts to place the more difficult shapes first and then the single and double unit
+          shapes last.</p>
+       <p>The hardest problems found are
+            <a @onclick="@(() => Update(57))" style="text-decoration:underline; color:#0D658C;">57</a>,
+            <a @onclick="@(() => Update(177))" style="text-decoration:underline; color:#0D658C;">177</a> and
+            <a @onclick="@(() => Update(180))" style="text-decoration:underline; color:#0D658C;">180</a>.</p>
 
     </ProblemSection>
 
     <OutputSection>      
 
-        <Card Padding="Padding.Is3">
+        <Card Padding="Padding.Is3" >
             <GeniusSquareBoard Values="@cellValues" Dice="@dice" />
         </Card>
 

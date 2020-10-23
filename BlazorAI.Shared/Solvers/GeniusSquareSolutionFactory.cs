@@ -137,14 +137,14 @@ namespace BlazorAI.Shared.Solvers
                   ⬜⬜⬜⬜ ⬜⬜⬜⬜ ⬜⬜⬜⬜ ⬜⬜⬜⬜
                   ⬜⬜⬜⬜ ⬜⬜⬜⬜ ⬜⬜⬜⬜ ⬜⬜⬜⬜",
 
+                // Easier just to drop double and single squares in when three gaps remains
                 // 9
-                @"⬛⬛⬜⬜ ⬛⬜⬜⬜
-                  ⬜⬜⬜⬜ ⬛⬜⬜⬜
-                  ⬜⬜⬜⬜ ⬜⬜⬜⬜
-                  ⬜⬜⬜⬜ ⬜⬜⬜⬜"
+                //@"⬛⬛⬜⬜ ⬛⬜⬜⬜
+                //  ⬜⬜⬜⬜ ⬛⬜⬜⬜
+                //  ⬜⬜⬜⬜ ⬜⬜⬜⬜
+                //  ⬜⬜⬜⬜ ⬜⬜⬜⬜"
 
                 // 10
-                // Easier just to drop single square in when one gap remains
                 //@"⬛⬜⬜⬜
                 //  ⬜⬜⬜⬜
                 //  ⬜⬜⬜⬜

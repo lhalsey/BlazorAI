@@ -1,8 +1,6 @@
 ﻿using BlazorAI.Client.Components;
-using BlazorAI.Client.Services;
 using BlazorAI.Shared.Solvers;
 using BlazorAI.Shared.Types;
-using Microsoft.AspNetCore.Components;
 using MoreLinq;
 using System;
 using System.Collections.Generic;
@@ -12,19 +10,16 @@ using System.Threading.Tasks;
 
 namespace BlazorAI.Client.Pages
 {
-    public class GeniusSquareBase : ComponentBase, ISolverPage<GeniusSquareSolution>
+    public class GeniusSquareBase : PageBase, ISolverPage<GeniusSquareSolution>
     {
-        [Inject]
-        public ISolverService SolverService { get; set; }
-
         public SolverParameters DefaultParameters =>
            new SolverParameters
            {
                Generations = 1_000,
                Population = 100,
-               Selection = SolverParameters.SolverSelection.Tournament,
+               Selection = SolverParameters.SolverSelection.Elite,
                CrossoverProbability = 0.5f,
-               MutationProbability = 0.75f
+               MutationProbability = 0.5f
            };
 
         public IAsyncEnumerable<Result<GeniusSquareSolution>> GetResults(
@@ -46,10 +41,19 @@ namespace BlazorAI.Client.Pages
 
         protected int[] cellValues;
 
-        protected int randomSeedSetting = 85;
+        protected int randomSeedSetting = 1;
 
         private const int GridSize = 6;
-        private int randomSeed = 85;
+        private int randomSeed = 1; // Pick an easy one!
+
+        protected async Task Update(int seed)
+        {
+            randomSeedSetting = seed;
+
+            await Update();
+
+            await ScrollToTop();
+        }
 
         protected async Task Update()
         {
@@ -61,9 +65,9 @@ namespace BlazorAI.Client.Pages
         }
 
         /// <summary>
-        /// The game claims 62,208 different puzzles and solutions based
-        /// on the spaces blocked up by the 7 ‘blocker’ pieces. We randomly
-        /// select a value from each of the 7 dice.
+        /// The game claims 62,208 (6^5 x 4 x 2) different puzzles and solutions based
+        /// on the spaces blocked up by the 7 ‘blocker’ pieces. We randomly select a
+        /// value from each of the 7 dice.
         /// https://mangosgaming.uk/portfolio/review-genius-square/
         /// </summary>
         private void SetBlockers()

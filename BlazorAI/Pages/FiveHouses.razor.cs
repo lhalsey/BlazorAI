@@ -1,17 +1,12 @@
-﻿using BlazorAI.Client.Services;
-using BlazorAI.Shared.Solvers;
+﻿using BlazorAI.Shared.Solvers;
 using BlazorAI.Shared.Types;
-using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading;
 
 namespace BlazorAI.Client.Pages
 {
-    public class FiveHousesBase : ComponentBase, ISolverPage<FiveHousesSolution>
+    public class FiveHousesBase : PageBase, ISolverPage<FiveHousesSolution>
     {
-        [Inject]
-        public ISolverService SolverService { get; set; }
-
         public SolverParameters DefaultParameters =>
             new SolverParameters
             {

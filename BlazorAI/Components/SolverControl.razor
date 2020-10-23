@@ -1,5 +1,5 @@
 ﻿
-<div class="solver-control">
+<div class="solver-control" id="solver-anchor">
    
 <Container Fluid="false">
     <Row>
@@ -19,14 +19,14 @@
                     <Blazorise.Icon Name="MaterialIcons.FastForward"/>
                 </Button>
 
-                <Button class="btn-round btn-round-smaller d-sm-none d-block"
-                        style="position: absolute; right: 40px; bottom: 3px; z-index: 1000;"
+                <Button class="btn-round btn-round-small d-sm-none d-block"
+                        style="position: absolute; right: 50px; bottom: 10px; z-index: 1000;"
                         @onclick="@ToggleSettings">
                     <Blazorise.Icon Name="@SettingsIcon"/>
                 </Button>
 
-                 <Button class="btn-round btn-round-smaller d-sm-none d-block"
-                         style="position: absolute; right: 1px; bottom: 3px; z-index: 1000;"
+                 <Button class="btn-round btn-round-small d-sm-none d-block"
+                         style="position: absolute; right: 1px; bottom: 10px; z-index: 1000;"
                          onclick="document.getElementById('problem-anchor').scrollIntoView({behavior:'smooth'})">
                     <Blazorise.Icon Name="MaterialIcons.HelpOutline"/>
                 </Button>
