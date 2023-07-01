@@ -4,7 +4,7 @@ namespace BlazorAI.Client
 {
     public partial class App
     {
-        private Theme theme = new Theme
+        private readonly Theme theme = new()
         {
             BreakpointOptions = new ThemeBreakpointOptions
             {

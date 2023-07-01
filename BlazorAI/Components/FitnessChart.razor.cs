@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlazorAI.Client.Components
 {
-    public class FitnessChartBase : ComponentBase
+    public partial class FitnessChart : ComponentBase
     {
         [Parameter]
         public int Generations { get; set; }
@@ -19,7 +19,7 @@ namespace BlazorAI.Client.Components
 
         protected LineChart<Point> lineChart;
 
-        protected LineChartOptions lineChartOptions = new LineChartOptions
+        protected LineChartOptions lineChartOptions = new()
         {
             MaintainAspectRatio = true,
             Animation = new ChartAnimation { Duration = 0 },
@@ -70,10 +70,10 @@ namespace BlazorAI.Client.Components
             await lineChart.AddLabelsDatasetsAndUpdate(labels, GetLineChartDataset());
         }
 
-        private LineChartDataset<Point> GetLineChartDataset()
+        private static LineChartDataset<Point> GetLineChartDataset()
         {
-            List<string> backgroundColors = new List<string> { ChartColor.FromRgba(195, 171, 214, 0.2f) };
-            List<string> borderColors = new List<string> { ChartColor.FromRgba(195, 171, 214, 0.8f) };
+            List<string> backgroundColors = new() { ChartColor.FromRgba(195, 171, 214, 0.2f) };
+            List<string> borderColors = new() { ChartColor.FromRgba(195, 171, 214, 0.8f) };
 
             return new LineChartDataset<Point>
             {

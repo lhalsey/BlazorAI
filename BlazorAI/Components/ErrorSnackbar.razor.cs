@@ -8,6 +8,6 @@ namespace BlazorAI.Client.Components
         [Parameter]
         public string Error { get; set; }
 
-        private bool showError => !string.IsNullOrEmpty(Error);
+        private bool ShowError => !string.IsNullOrEmpty(Error);
     }
 }

@@ -39,10 +39,10 @@ namespace BlazorAI.Client.Components
         protected string cssClass = "m-hidden";
 
         protected string error;
-        protected bool showError => !string.IsNullOrEmpty(error);
+        protected bool ShowError => !string.IsNullOrEmpty(error);
 
         private CancellationTokenSource token;
-        private Stopwatch stopwatch = new Stopwatch();
+        private readonly Stopwatch stopwatch = new();
 
         protected override async Task OnInitializedAsync()
         {
