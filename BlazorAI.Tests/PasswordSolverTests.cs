@@ -1,7 +1,6 @@
 ﻿using BlazorAI.Shared.Solvers;
 using FluentAssertions;
-using GeneticSharp.Domain;
-using GeneticSharp.Domain.Crossovers;
+using GeneticSharp;
 
 namespace BlazorAI.Tests
 {

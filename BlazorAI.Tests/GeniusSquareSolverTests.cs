@@ -1,9 +1,7 @@
 ﻿using BlazorAI.Shared.Solvers;
 using BlazorAI.Shared.Types;
 using FluentAssertions;
-using GeneticSharp.Domain;
-using GeneticSharp.Domain.Chromosomes;
-using GeneticSharp.Domain.Crossovers;
+using GeneticSharp;
 using System;
 using System.IO;
 using System.Linq;

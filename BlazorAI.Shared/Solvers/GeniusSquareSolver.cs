@@ -1,13 +1,6 @@
 ﻿using BlazorAI.Shared.Types;
 using BlazorAI.Shared.Utility;
-using GeneticSharp.Domain;
-using GeneticSharp.Domain.Chromosomes;
-using GeneticSharp.Domain.Crossovers;
-using GeneticSharp.Domain.Fitnesses;
-using GeneticSharp.Domain.Mutations;
-using GeneticSharp.Domain.Populations;
-using GeneticSharp.Domain.Randomizations;
-using GeneticSharp.Domain.Selections;
+using GeneticSharp;
 using MoreLinq;
 using System;
 using System.Collections.Generic;

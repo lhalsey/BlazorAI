@@ -1,13 +1,6 @@
 ﻿using BlazorAI.Shared.Types;
 using BlazorAI.Shared.Utility;
-using GeneticSharp.Domain;
-using GeneticSharp.Domain.Chromosomes;
-using GeneticSharp.Domain.Crossovers;
-using GeneticSharp.Domain.Fitnesses;
-using GeneticSharp.Domain.Mutations;
-using GeneticSharp.Domain.Populations;
-using GeneticSharp.Domain.Randomizations;
-using GeneticSharp.Domain.Selections;
+using GeneticSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -142,7 +135,6 @@ namespace BlazorAI.Shared.Solvers
             var solution = GetSolution(chromosome);
 
             return Rules.Sum(x => x.Score(solution));
-            //return Rules.Sum(x => x.Score(solution) > 0 ? 1 : 0);
         }
 
         public double Evaluate(IChromosome chromosome)

@@ -19,7 +19,7 @@ namespace BlazorAI.Client
             builder.Services
               .AddBlazorise(options =>
               {
-                  options.ChangeTextOnKeyPress = true;
+                  options.Immediate = true;
               })
               .AddMaterialProviders()
               .AddMaterialIcons();
@@ -35,10 +35,6 @@ namespace BlazorAI.Client
             builder.RootComponents.Add<App>("app");
 
             var host = builder.Build();
-
-            host.Services
-              .UseMaterialProviders()
-              .UseMaterialIcons();
 
             await host.RunAsync();
         }

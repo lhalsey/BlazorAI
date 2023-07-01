@@ -1,9 +1,5 @@
 ﻿using BlazorAI.Shared.Types;
-using GeneticSharp.Domain;
-using GeneticSharp.Domain.Chromosomes;
-using GeneticSharp.Domain.Populations;
-using GeneticSharp.Domain.Selections;
-using GeneticSharp.Domain.Terminations;
+using GeneticSharp;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -19,8 +15,6 @@ namespace BlazorAI.Shared.Solvers
         public GeneticAlgorithm GetGeneticAlgorithm(SolverParameters parameters)
         {
             var ga = GetGA(parameters);
-
-            ga.Population.GenerationStrategy = new PerformanceGenerationStrategy();
 
             ga.CrossoverProbability = parameters.CrossoverProbability;
             ga.MutationProbability = parameters.MutationProbability;

@@ -10,7 +10,7 @@ namespace BlazorAI.Client.Pages
     public class PasswordBase : PageBase, ISolverPage<PasswordSolution>
     {
         public SolverParameters DefaultParameters =>
-            new SolverParameters
+            new()
             {
                 Generations = 200,
                 Population = 100,

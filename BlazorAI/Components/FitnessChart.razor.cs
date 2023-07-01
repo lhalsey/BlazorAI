@@ -19,6 +19,20 @@ namespace BlazorAI.Client.Components
 
         protected LineChart<Point> lineChart;
 
+        protected LineChartOptions lineChartOptions = new LineChartOptions
+        {
+            MaintainAspectRatio = true,
+            Animation = new ChartAnimation { Duration = 0 },
+            AspectRatio = 3.5,
+            Plugins = new ChartPlugins
+            {
+                Legend = new ChartLegend
+                {
+                    Display = false
+                }
+            }
+        };
+
         private const int StepSize = 5;
 
         private int RequiredStep => Generations / NumPoints;
@@ -29,7 +43,7 @@ namespace BlazorAI.Client.Components
         {
             if (generation % ActualStep == 0 || value.Y == 100)
             {
-                lineChart.AddData(0, new Point[] { value });
+                lineChart.AddData(0, value);
                 lineChart.Update();
             }
         }
@@ -54,15 +68,6 @@ namespace BlazorAI.Client.Components
             var labels = 0.To(ActualPoints).Select(x => (x * ActualStep).ToString()).ToArray();
 
             await lineChart.AddLabelsDatasetsAndUpdate(labels, GetLineChartDataset());
-
-            await lineChart.SetOptions(new LineChartOptions
-            {
-                Legend = new Legend { Display = false },
-                ResponsiveAnimationDuration = 0,
-                Animation = new Animation { Duration = 0 },
-                MaintainAspectRatio = true,
-                AspectRatio = 3.5
-            });
         }
 
         private LineChartDataset<Point> GetLineChartDataset()
@@ -72,11 +77,12 @@ namespace BlazorAI.Client.Components
 
             return new LineChartDataset<Point>
             {
+                //Label = "Fitness",
                 Data = new List<Point>() { },
                 BackgroundColor = backgroundColors,
                 BorderColor = borderColors,
                 Fill = true,
-                PointRadius = 2,
+                PointRadius = 1,
                 BorderDash = new List<int> { }
             };
         }

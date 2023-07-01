@@ -1,5 +1,4 @@
-﻿using GeneticSharp.Domain.Chromosomes;
-using GeneticSharp.Domain.Randomizations;
+﻿using GeneticSharp;
 using MoreLinq;
 using System;
 using System.Linq;
