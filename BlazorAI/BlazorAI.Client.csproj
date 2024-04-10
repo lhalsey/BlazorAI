@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,14 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazorise" Version="1.2.4" />
-    <PackageReference Include="Blazorise.Charts" Version="1.2.4" />
-    <PackageReference Include="Blazorise.Icons.Material" Version="1.2.4" />
-    <PackageReference Include="Blazorise.Material" Version="1.2.4" />
-    <PackageReference Include="Blazorise.Snackbar" Version="1.2.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.8" PrivateAssets="all" />
-    <PackageReference Include="System.Net.Http.Json" Version="7.0.1" />
+    <PackageReference Include="Blazorise" Version="1.5.1" />
+    <PackageReference Include="Blazorise.Charts" Version="1.5.1" />
+    <PackageReference Include="Blazorise.Icons.Material" Version="1.5.1" />
+    <PackageReference Include="Blazorise.Material" Version="1.5.1" />
+    <PackageReference Include="Blazorise.Snackbar" Version="1.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.4" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
