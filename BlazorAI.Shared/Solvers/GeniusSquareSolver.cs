@@ -1,10 +1,11 @@
 ﻿using BlazorAI.Shared.Types;
 using BlazorAI.Shared.Utility;
 using GeneticSharp;
-using MoreLinq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static MoreLinq.Extensions.BatchExtension;
+using static MoreLinq.Extensions.PermutationsExtension;
 
 namespace BlazorAI.Shared.Solvers
 {
@@ -17,18 +18,13 @@ namespace BlazorAI.Shared.Solvers
     /// Each shape is encoded with 3 integers representing row, column and orientation.
     /// <see cref="GeniusSquareSolutionFactory.shapes"/>
     /// </summary>
-    public class GeniusSquareSolver : Solver<GeniusSquareSolution>
+    public class GeniusSquareSolver(int[] blockers) : Solver<GeniusSquareSolution>
     {
-        public GeniusSquareSolver(int[] blockers)
-        {
-            FitnessProvider = new GeniusSquareFitness(blockers);
-        }
-
         public const int Shapes = 7; //8; // Don't include single unit square as we just place in the last empty space
         public const int GenesPerShape = 3; // Orientation, Column, Row
         public const int MaxValue = 360; // This number gives a good range and is divisible by many numbers
 
-        GeniusSquareFitness FitnessProvider { get; }
+        GeniusSquareFitness FitnessProvider { get; } = new GeniusSquareFitness(blockers);
 
         protected override GeneticAlgorithm GetGA(SolverParameters parameters)
         {
@@ -46,10 +42,10 @@ namespace BlazorAI.Shared.Solvers
         }
 
         protected override GeniusSquareSolution GetSolution(IChromosome chromosome) =>
-            new GeniusSquareSolution(CellValues: FitnessProvider.GetSolution(chromosome));
+            new (CellValues: FitnessProvider.GetSolution(chromosome));
     }
 
-    public class GeniusSquareFitness : IFitness
+    public class GeniusSquareFitness(int[] blockers) : IFitness
     {
         const int GridHeight = 6;
         const int GridWidth = 6;
@@ -60,19 +56,11 @@ namespace BlazorAI.Shared.Solvers
         const int DoubleUnitShapeIndex = 9;
         const int SingleUnitShapeIndex = 10;
 
-        public GeniusSquareFitness(int[] blockers)
-        {
-            SolutionFactory = new GeniusSquareSolutionFactory();
+        GeniusSquareSolutionFactory SolutionFactory { get; } = new GeniusSquareSolutionFactory();
 
-            // Array representing 6 x 6 grid with blockers that we can add shapes to
-            EmptySolutionWithBlockers =
+        IEnumerable<int> EmptySolutionWithBlockers { get; } =
                 0.To(GridCells - 1)
                 .Select(x => blockers.Contains(x) ? 1 : 0);
-        }
-
-        GeniusSquareSolutionFactory SolutionFactory { get; }
-
-        IEnumerable<int> EmptySolutionWithBlockers { get; }
 
         public int[] GetSolution(IChromosome chromosome)
         {
@@ -86,10 +74,10 @@ namespace BlazorAI.Shared.Solvers
             var shapeCells =
                 shapes
                 .Select(x => SolutionFactory.GetIndexes(
-                    shapeId: x.Key,
-                    shapeValue: x.Value[0],
-                    xValue: x.Value[1],
-                    yValue: x.Value[2]))
+                    shapeId: x.Index,
+                    shapeValue: x.Item[0],
+                    xValue: x.Item[1],
+                    yValue: x.Item[2]))
                 .ToArray();
 
             int[] solution = EmptySolutionWithBlockers.ToArray();
@@ -113,7 +101,7 @@ namespace BlazorAI.Shared.Solvers
                 }
             }
 
-            bool IsAdjacent(int i1, int i2)
+            static bool IsAdjacent(int i1, int i2)
             {
                 var (r1, c1) = (i1 / GridWidth, i1 % GridWidth);
                 var (r2, c2) = (i2 / GridWidth, i2 % GridWidth);
@@ -130,8 +118,8 @@ namespace BlazorAI.Shared.Solvers
                 var empty =
                     solution
                     .Index()
-                    .Where(x => x.Value == 0)
-                    .Select(x => x.Key)
+                    .Where(x => x.Item == 0)
+                    .Select(x => x.Index)
                     .ToList();
 
                 var sol = empty.Permutations().FirstOrDefault(x => IsAdjacent(x[0], x[1]));
@@ -153,7 +141,7 @@ namespace BlazorAI.Shared.Solvers
 
             int[] solution = GetSolution(chromosome);
 
-            var emptyCells = solution.Index().Where(x => x.Value == 0).ToList();
+            var emptyCells = solution.Index().Where(x => x.Item == 0).ToList();
 
             double GetDistanceFromCentre(int cellIndex)
             {
@@ -167,7 +155,7 @@ namespace BlazorAI.Shared.Solvers
 
             // Penalise empty cells the further they are from the centre
             // We have a greater chance of fitting a shape into the gaps if the gaps are close
-            var penalty = emptyCells.Sum(x => GetDistanceFromCentre(x.Key));
+            var penalty = emptyCells.Sum(x => GetDistanceFromCentre(x.Index));
 
             bool HasEmptyAdjacent(int index)
             {
@@ -181,9 +169,9 @@ namespace BlazorAI.Shared.Solvers
             }
 
             // Penalise empty cells with no other empty cells surrounding them
-            penalty += emptyCells.Count(x => !HasEmptyAdjacent(x.Key)) * 2;
+            penalty += emptyCells.Count(x => !HasEmptyAdjacent(x.Index)) * 2;
 
-            return Math.Max(0.0, 1.0 - ((emptyCells.Count() + penalty * PenaltyWeight) / GridCells));
+            return Math.Max(0.0, 1.0 - ((emptyCells.Count + penalty * PenaltyWeight) / GridCells));
         }
     }
 
@@ -196,7 +184,7 @@ namespace BlazorAI.Shared.Solvers
         public override IChromosome CreateNew() => new GeniusSquareChromosome();
 
         public override Gene GenerateGene(int geneIndex) =>
-            new Gene(RandomizationProvider.Current.GetInt(0, GeniusSquareSolver.MaxValue));
+            new(RandomizationProvider.Current.GetInt(0, GeniusSquareSolver.MaxValue));
     }
 
     public class IntMutation : MutationBase

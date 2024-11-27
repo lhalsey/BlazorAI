@@ -1,7 +1,8 @@
-﻿using MoreLinq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using static MoreLinq.Extensions.TransposeExtension;
+//using static MoreLinq.Extensions.IndexExtension;
 
 namespace BlazorAI.Shared.Solvers
 {
@@ -86,7 +87,7 @@ namespace BlazorAI.Shared.Solvers
                 shapes
                 .Select(ParseShapeGroup)
                 .Index()
-                .ToDictionary(x => x.Key, x => x.Value);
+                .ToDictionary(x => x.Index, x => x.Item);
         }
 
         // There's probably a better way of doing this, but I found

@@ -1,28 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
-
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <RunAOTCompilation>True</RunAOTCompilation>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <RunAOTCompilation>True</RunAOTCompilation>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Blazorise" Version="1.5.1" />
     <PackageReference Include="Blazorise.Charts" Version="1.5.1" />
     <PackageReference Include="Blazorise.Icons.Material" Version="1.5.1" />
     <PackageReference Include="Blazorise.Material" Version="1.5.1" />
     <PackageReference Include="Blazorise.Snackbar" Version="1.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.4" PrivateAssets="all" />
-    <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="9.0.0" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="wwwroot\css\material\" />
     <Folder Include="wwwroot\images\footer\" />
@@ -34,9 +29,7 @@
     <Folder Include="wwwroot\images\problems\travellingsalesman\" />
     <Folder Include="wwwroot\js\material\" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\BlazorAI.Shared\BlazorAI.Shared.csproj" />
   </ItemGroup>
-
 </Project>
