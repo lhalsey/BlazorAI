@@ -3,10 +3,12 @@
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <RunAOTCompilation>True</RunAOTCompilation>
+    <RunAOTCompilation>False</RunAOTCompilation>
+	<PublishTrimmed>True</PublishTrimmed>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <RunAOTCompilation>True</RunAOTCompilation>
+    <RunAOTCompilation>False</RunAOTCompilation>
+	<PublishTrimmed>True</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Blazorise" Version="1.5.1" />
@@ -16,7 +18,6 @@
     <PackageReference Include="Blazorise.Snackbar" Version="1.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0" PrivateAssets="all" />
-    <PackageReference Include="System.Net.Http.Json" Version="9.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\css\material\" />
