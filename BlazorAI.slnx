@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BlazorAI.Shared/BlazorAI.Shared.csproj" />
+  <Project Path="BlazorAI.Tests/BlazorAI.Tests.csproj" />
+  <Project Path="BlazorAI/BlazorAI.Client.csproj" />
+</Solution>
