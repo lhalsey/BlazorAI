@@ -3,7 +3,7 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="GeneticSharp" Version="3.1.4" />
-    <PackageReference Include="morelinq" Version="4.4.0" />
+    <PackageReference Include="GeneticSharp" />
+    <PackageReference Include="morelinq" />
   </ItemGroup>
 </Project>

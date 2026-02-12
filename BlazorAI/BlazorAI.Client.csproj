@@ -11,13 +11,13 @@
 	<PublishTrimmed>True</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Blazorise" Version="1.5.1" />
-    <PackageReference Include="Blazorise.Charts" Version="1.5.1" />
-    <PackageReference Include="Blazorise.Icons.Material" Version="1.5.1" />
-    <PackageReference Include="Blazorise.Material" Version="1.5.1" />
-    <PackageReference Include="Blazorise.Snackbar" Version="1.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.1" PrivateAssets="all" />
+    <PackageReference Include="Blazorise" />
+    <PackageReference Include="Blazorise.Charts" />
+    <PackageReference Include="Blazorise.Icons.Material" />
+    <PackageReference Include="Blazorise.Material" />
+    <PackageReference Include="Blazorise.Snackbar" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\css\material\" />

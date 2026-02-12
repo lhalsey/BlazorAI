@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <EnableCentralPackageVersionManagement>true</EnableCentralPackageVersionManagement>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Blazorise" Version="1.5.1" />
+    <PackageVersion Include="Blazorise.Charts" Version="1.5.1" />
+    <PackageVersion Include="Blazorise.Icons.Material" Version="1.5.1" />
+    <PackageVersion Include="Blazorise.Material" Version="1.5.1" />
+    <PackageVersion Include="Blazorise.Snackbar" Version="1.5.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.1" />
+
+    <PackageVersion Include="GeneticSharp" Version="3.1.4" />
+    <PackageVersion Include="morelinq" Version="4.4.0" />
+
+    <PackageVersion Include="FluentAssertions" Version="6.12.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+  </ItemGroup>
+</Project>
